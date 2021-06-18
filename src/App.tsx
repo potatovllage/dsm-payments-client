@@ -1,20 +1,18 @@
 import { Switch, Route } from "react-router-dom";
 
-import "./App.css";
-import { Header } from "./components";
-import { SellerRouter, UserRouter } from "./routers";
+import "./notosansKR.css";
+import { Main, Login, TeacherLogin } from "./components";
 
-function App() {
+const App = () => {
   return (
     <>
-      <Header />
       <Switch>
-        <Route path="/seller" component={SellerRouter} />
-        <Route path="/user" component={UserRouter} />
-        <Route path="/" render={() => <main>main</main>} />
+        <Route path="/teacher/login" component={TeacherLogin} />
+        <Route path="/login" component={Login} />
+        <Route path="/" component={Main} />
       </Switch>
     </>
   );
-}
+};
 
 export default App;
