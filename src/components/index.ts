@@ -1,3 +1,2 @@
-export * from "./seller";
-export * from "./user";
-export * from "./header";
+export * from "./main";
+export * from "./login";
