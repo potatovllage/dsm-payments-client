@@ -7,7 +7,7 @@ const useValue = (defaultValue?: string) => {
     setValue(e.currentTarget.value);
   }, []);
 
-  return { value, onChange };
+  return { value, onChange } as const;
 };
 
 export default useValue;
