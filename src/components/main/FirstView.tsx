@@ -43,9 +43,14 @@ const FirstView = ({ style }: Props) => {
         id="canvas"
         value={uuid}
         style={{ display: "none", width: "25%", height: "25%" }}
+      />
+      <img
+        ref={imgRef}
+        id="qrcode"
+        alt="qrcode"
+        title="arcode"
         onClick={downloadQRCode}
       />
-      <img ref={imgRef} alt="qrcode" title="arcode" />
       <p className="uuid">
         <span>고유번호</span>
         <span>{uuid}</span>
@@ -106,12 +111,13 @@ const FirstViewWrap = styled.div`
       }
     }
   }
-  #canvas,
-  img {
+  #qrcode {
     min-width: 180px;
     min-height: 180px;
     width: 35%;
     height: 35%;
+    max-width: 350px;
+    max-height: 350px;
   }
 `;
 
