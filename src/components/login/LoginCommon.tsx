@@ -11,6 +11,7 @@ import LoginInput from "./LoginInput";
 import { LoginReq, LoginRes } from "../../utils/libs/types";
 import { getUser } from "../../utils/apis";
 import { userState } from "../../utils/recoils";
+import useLoading from "../../utils/hooks/public/useLoading";
 
 type Props = {
   id: string;
@@ -32,6 +33,7 @@ const LoginCommon: FC<Props> = ({
   const passwordRef = useRef<HTMLLabelElement>(null);
   const history = useHistory();
   const setUser = useSetRecoilState(userState);
+  const { loading, startLoading, endLoading } = useLoading();
 
   const checkValidation = () => {
     if (!idRef.current || !passwordRef.current) return;
@@ -59,6 +61,7 @@ const LoginCommon: FC<Props> = ({
   };
 
   const login = async () => {
+    startLoading();
     try {
       const {
         data: { accessToken },
@@ -71,10 +74,10 @@ const LoginCommon: FC<Props> = ({
       if (!userInfo) return;
 
       setUser(userInfo);
-
       history.push("/");
     } catch (err) {
       alert("로그인에 실패했어요.");
+      endLoading();
     }
   };
 
@@ -130,7 +133,20 @@ const LoginCommon: FC<Props> = ({
           inputRef={passwordRef}
         />
         {children}
-        <button onClick={onClickLogin}>로그인</button>
+        {loading ? (
+          <ul>
+            <DotLoaderWrap wait={100} />
+            <DotLoaderWrap wait={200} />
+            <DotLoaderWrap wait={300} />
+          </ul>
+        ) : (
+          <button
+            disabled={[id, password].some((v) => v.trim() === "")}
+            onClick={onClickLogin}
+          >
+            로그인
+          </button>
+        )}
       </div>
     </LoginWrap>
   );
@@ -172,6 +188,42 @@ const LoginWrap = styled.main`
     border-radius: 8px;
     background-color: #2a77f4;
     color: white;
+    transition: 300ms;
+    &:disabled {
+      background-color: #8c8c8c;
+    }
+    &:hover {
+      transform: scale(1.03);
+    }
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+  ul {
+    display: flex;
+    margin-top: 40px;
+  }
+  @keyframes dotLoader {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
   }
 `;
+
+const DotLoaderWrap = styled.li<{ wait: number }>`
+  width: 14px;
+  height: 14px;
+  margin: 0 4px;
+  border-radius: 50%;
+  background-color: #d0d0d0;
+  animation: dotLoader 1000ms ${({ wait }) => wait}ms
+    cubic-bezier(0.3, 1, 0.2, 0.95) infinite;
+`;
+
 export default LoginCommon;
