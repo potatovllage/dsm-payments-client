@@ -44,10 +44,6 @@ const SecondView = ({ style }: Props) => {
     }, flipMillSec);
   };
 
-  const onClickIncreaseBooth = () => {
-    setBoothCount((prev) => prev + 1);
-  };
-
   const printBoothDescription = useMemo(() => {
     if (boothCount >= 10) {
       return <p>맙소사 부스를 {boothCount}회 이용했어요!</p>;
@@ -102,10 +98,8 @@ const SecondView = ({ style }: Props) => {
   }, [boothCount]);
 
   return (
-    <SecondViewWrap className="flex-center" style={style} toggle={toggle}>
-      <h1 className="title" onClick={onClickIncreaseBooth}>
-        우와 정말 대단해요!
-      </h1>
+    <SecondViewWrap style={style} toggle={toggle}>
+      <h1 className="title">부스를 이용해 뱃지를 획득하세요.</h1>
       <p className="desc">
         부스를 5회 이용하면 귀신의 집 뱃지를 획득할 수 있어요!
       </p>
