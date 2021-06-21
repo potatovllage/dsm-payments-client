@@ -5,8 +5,8 @@ import styled from "@emotion/styled";
 
 import FirstView from "./FirstView";
 import SecondView from "./SecondView";
+import Navigator from "./Navigator";
 
-import { BsChevronDoubleLeft, BsChevronDoubleRight } from "../../assets";
 import useResize from "../../utils/hooks/public/useResize";
 import { userState } from "../../utils/recoils";
 
@@ -24,30 +24,19 @@ const Main = () => {
     }
   }, []);
 
-  const onClickMove = (width: number) => {
-    if (!divRef.current) return;
-
-    divRef.current.scrollTo({ left: width, behavior: "smooth" });
-  };
-
   return (
     <MainWrap height={window.screen.availHeight}>
       <div ref={divRef} style={{ width }}>
         <FirstView style={style} />
         <SecondView style={style} />
       </div>
-      <nav>
-        <BsChevronDoubleLeft onClick={() => onClickMove(-width)} />
-        <BsChevronDoubleRight onClick={() => onClickMove(width)} />
-      </nav>
+      <Navigator divRef={divRef} width={width} />
     </MainWrap>
   );
 };
 
 const MainWrap = styled.main<{ height: number }>`
   width: 100%;
-  padding-bottom: 50px;
-  overflow-y: hidden;
   > div {
     display: flex;
     align-items: center;
@@ -62,25 +51,6 @@ const MainWrap = styled.main<{ height: number }>`
         margin: 18px auto;
         max-width: 500px;
       }
-    }
-  }
-  > nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 100%;
-    padding: 12px 0;
-    background-color: white;
-    box-shadow: 0 -1px 3px #b1b1b1;
-    > svg {
-      width: 40px;
-      height: 24px;
-      border-radius: 8px;
-      box-shadow: 0px 0px 3px #303030;
-      cursor: pointer;
     }
   }
 `;
