@@ -22,7 +22,7 @@ const InputWrap = styled.label`
   display: block;
   width: 80%;
   max-width: 500px;
-  margin-bottom: 48px;
+  margin-bottom: 30px;
   padding-top: 24px;
   border-bottom: 1px solid #e2e2e2;
   transition: all 300ms;
