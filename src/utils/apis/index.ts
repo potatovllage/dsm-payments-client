@@ -2,8 +2,8 @@ import axios from "axios";
 
 import { LoginReq, LoginRes, UserRes } from "../libs/types";
 
-// const BASE_URL = "https://dsm-festival-2021";
-const BASE_URL = "http://192.168.137.249:8080";
+const BASE_URL = "https://6a170f85d823.ngrok.io";
+
 const request = axios.create({
   baseURL: BASE_URL,
 });

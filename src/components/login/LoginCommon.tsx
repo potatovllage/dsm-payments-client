@@ -62,6 +62,22 @@ const LoginCommon: FC<Props> = ({
 
   const login = async () => {
     startLoading();
+
+    // setTimeout(() => {
+    //   setUser({
+    //     uuid: "1234567",
+    //     name: "테스트",
+    //     number: 1111,
+    //     coin: 1000000000,
+    //   });
+    //   localStorage.setItem(
+    //     "accessToken",
+    //     "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjQ1MTgyMDUsImV4cCI6MTYyNDYwNDYwNSwic3ViIjoiYXNkZiIsInR5cGUiOiJib290aCJ9.cEExgm3Wr_v0OvU4nvZlAR8qMTKBbEqFMGodCG75j-0"
+    //   );
+
+    //   history.push("/");
+    // }, 2000);
+
     try {
       const {
         data: { accessToken },
