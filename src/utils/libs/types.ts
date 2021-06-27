@@ -18,3 +18,12 @@ export type UserRes = {
   uuid: string;
   coin: number;
 };
+
+export type PaySuccessFulType = {
+  finalValue: number;
+  id: number;
+  requestValue: number;
+  sender: string;
+  tax: number;
+  user: UserRes;
+};
