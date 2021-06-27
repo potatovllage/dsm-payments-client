@@ -1,4 +1,3 @@
-import { RefObject } from "react";
 import styled from "@emotion/styled";
 
 import {
@@ -7,16 +6,14 @@ import {
   RiCoupon2Line,
   RiCoupon2Fill,
 } from "../../assets";
-import useMovePage from "../../utils/hooks/useMovePage";
 
 type Props = {
-  divRef: RefObject<HTMLDivElement>;
-  width: number;
+  page: number;
+  moveFirstPage: () => void;
+  moveSecondPage: () => void;
 };
 
-const Navigator = ({ divRef, width }: Props) => {
-  const { page, moveFirstPage, moveSecondPage } = useMovePage(divRef, width);
-
+const Navigator = ({ page, moveFirstPage, moveSecondPage }: Props) => {
   return (
     <NavigatorWrap>
       {page === 1 ? (

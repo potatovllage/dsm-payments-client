@@ -1,36 +1,68 @@
 import { useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
-import { useHistory } from "react-router";
 import styled from "@emotion/styled";
 
 import FirstView from "./FirstView";
 import SecondView from "./SecondView";
 import Navigator from "./Navigator";
+import withNeedAuth from "./withNeedAuth";
 
-import useResize from "../../utils/hooks/public/useResize";
+import { useResize, useMovePage, useSocket } from "../../utils/hooks";
 import { userState } from "../../utils/recoils";
 
 const Main = () => {
-  const history = useHistory();
   const divRef = useRef<HTMLDivElement>(null);
-  const { uuid, name, coin, number } = useRecoilValue(userState);
+  const { number } = useRecoilValue(userState);
   const width = useResize();
   const style = { flex: `0 0 ${width}px` };
+  const { page, moveFirstPage, moveSecondPage } = useMovePage(divRef, width);
+  const { socket } = useSocket();
 
   useEffect(() => {
-    if (uuid === "" && name === "" && coin === 0 && number === 0) {
-      history.push("/login");
-      return;
-    }
+    if (number === 0 || socket.current === undefined) return;
+
+    socket.current.emit("receipt-join", { number });
+  }, [number, socket]);
+
+  useEffect(() => {
+    const callback: IntersectionObserverCallback = (entries) => {
+      const visibleTargetIdx = entries.findIndex((e) => e.isIntersecting);
+
+      if (visibleTargetIdx === 0) moveFirstPage();
+      else if (visibleTargetIdx === 1) moveSecondPage();
+    };
+
+    const options = {
+      root: document.getElementById("scroll-area"),
+      rootMargin: "0px",
+      threshold: 0.5,
+    };
+
+    const observer = new IntersectionObserver(callback, options);
+    const firstTarget = document.getElementById("first-view");
+    const secondTarget = document.getElementById("second-view");
+
+    if (!firstTarget || !secondTarget) return;
+
+    observer.observe(firstTarget);
+    observer.observe(secondTarget);
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
-    <MainWrap height={window.screen.availHeight}>
+    <MainWrap id="scroll-area" height={window.screen.availHeight}>
       <div ref={divRef} style={{ width }}>
         <FirstView style={style} />
         <SecondView style={style} />
       </div>
-      <Navigator divRef={divRef} width={width} />
+      <Navigator
+        page={page}
+        moveFirstPage={moveFirstPage}
+        moveSecondPage={moveSecondPage}
+      />
     </MainWrap>
   );
 };
@@ -55,4 +87,4 @@ const MainWrap = styled.main<{ height: number }>`
   }
 `;
 
-export default Main;
+export default withNeedAuth(Main);

@@ -2,7 +2,7 @@ import { useRef, useState, useMemo } from "react";
 import styled from "@emotion/styled";
 import { keyframes, css } from "@emotion/react";
 
-import { BiLockAlt, BiBadge, BiAbacus, BiAdjust } from "../../assets";
+import { badgeGhostHouse } from "../../assets";
 import useToggle from "../../utils/hooks/public/useToggle";
 
 type Props = { style: { flex: string } };
@@ -66,39 +66,79 @@ const SecondView = ({ style }: Props) => {
     if (boothCount >= 10) {
       return (
         <>
-          <BiLockAlt className="front" />
-          <BiLockAlt className="back" />
+          <img
+            src={badgeGhostHouse}
+            alt="badge"
+            title="badege"
+            className="front"
+          />
+          <img
+            src={badgeGhostHouse}
+            alt="badge"
+            title="badege"
+            className="back"
+          />
         </>
       );
     }
     if (boothCount >= 8) {
       return (
         <>
-          <BiBadge className="front" />
-          <BiBadge className="back" />
+          <img
+            src={badgeGhostHouse}
+            alt="badge"
+            title="badege"
+            className="front"
+          />
+          <img
+            src={badgeGhostHouse}
+            alt="badge"
+            title="badege"
+            className="back"
+          />
         </>
       );
     }
     if (boothCount >= 5) {
       return (
         <>
-          <BiAbacus className="front" />
-          <BiAbacus className="back" />
+          <img
+            src={badgeGhostHouse}
+            alt="badge"
+            title="badege"
+            className="front"
+          />
+          <img
+            src={badgeGhostHouse}
+            alt="badge"
+            title="badege"
+            className="back"
+          />
         </>
       );
     }
     if (boothCount >= 0) {
       return (
         <>
-          <BiAdjust className="front" />
-          <BiAdjust className="back" />
+          <img
+            src={badgeGhostHouse}
+            alt="badge"
+            title="badege"
+            className="front"
+          />
+          <img
+            src={badgeGhostHouse}
+            alt="badge"
+            title="badege"
+            className="back"
+          />
         </>
       );
     }
   }, [boothCount]);
 
   return (
-    <SecondViewWrap style={style} toggle={toggle}>
+    <SecondViewWrap id="second-view" style={style} toggle={toggle}>
       <h1 className="title">부스를 이용해 뱃지를 획득하세요.</h1>
       <p className="desc">
         부스를 5회 이용하면 귀신의 집 뱃지를 획득할 수 있어요!
@@ -123,7 +163,7 @@ const SecondViewWrap = styled.div<{ toggle: boolean }>`
     text-align: center;
     transform-style: preserve-3d;
     animation: jump 5000ms linear infinite;
-    > svg {
+    > img {
       position: absolute;
       top: 80%;
       left: 50%;
@@ -135,7 +175,6 @@ const SecondViewWrap = styled.div<{ toggle: boolean }>`
       max-width: 300px;
       max-height: 300px;
       margin: auto;
-      padding: 12px;
       border-radius: 50%;
       box-shadow: -3px 3px 5px #cfcfcf, inset 3px -3px 5px #6b6b6b;
       backface-visibility: hidden;

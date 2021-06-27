@@ -34,7 +34,7 @@ const FirstView = ({ style }: Props) => {
   useEffect(canvasToImg, [imgRef.current]);
 
   return (
-    <FirstViewWrap style={style}>
+    <FirstViewWrap id="first-view" style={style}>
       <h1 className="title">축제 부스 이용을 위한 QR코드</h1>
       <p className="desc">
         이용하려는 부스에 QR코드로 결제하거나 QR코드 대신 고유번호로 결제하세요.
