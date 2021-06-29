@@ -1,6 +1,5 @@
 import { Switch, Route } from "react-router-dom";
 
-import "./notosansKR.css";
 import { Main, Login, TeacherLogin } from "./components";
 
 const App = () => {

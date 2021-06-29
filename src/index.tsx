@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
 import "./index.css";
+import "./notosansKR.css";
 import App from "./App";
 
 render(
