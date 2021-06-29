@@ -69,6 +69,7 @@ const LoginCommon: FC<Props> = ({
     //     name: "테스트",
     //     number: 1111,
     //     coin: 1000000000,
+    //     countOfUsedBooth: 5,
     //   });
     //   localStorage.setItem(
     //     "accessToken",

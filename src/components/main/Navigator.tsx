@@ -9,22 +9,26 @@ import {
 
 type Props = {
   page: number;
-  moveFirstPage: () => void;
-  moveSecondPage: () => void;
+  onClickMoveFirstPage: () => void;
+  onClickMoveSecondPage: () => void;
 };
 
-const Navigator = ({ page, moveFirstPage, moveSecondPage }: Props) => {
+const Navigator = ({
+  page,
+  onClickMoveFirstPage,
+  onClickMoveSecondPage,
+}: Props) => {
   return (
     <NavigatorWrap>
       {page === 1 ? (
-        <IoQrCode className="active" onClick={moveFirstPage} />
+        <IoQrCode className="active" onClick={onClickMoveFirstPage} />
       ) : (
-        <IoQrCodeOutline onClick={moveFirstPage} />
+        <IoQrCodeOutline onClick={onClickMoveFirstPage} />
       )}
       {page === 2 ? (
-        <RiCoupon2Fill className="active" onClick={moveSecondPage} />
+        <RiCoupon2Fill className="active" onClick={onClickMoveSecondPage} />
       ) : (
-        <RiCoupon2Line onClick={moveSecondPage} />
+        <RiCoupon2Line onClick={onClickMoveSecondPage} />
       )}
     </NavigatorWrap>
   );

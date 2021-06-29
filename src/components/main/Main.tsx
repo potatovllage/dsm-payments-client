@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "@emotion/styled";
 
 import FirstView from "./FirstView";
@@ -9,14 +9,32 @@ import withNeedAuth from "./withNeedAuth";
 
 import { useResize, useMovePage, useSocket } from "../../utils/hooks";
 import { userState } from "../../utils/recoils";
+import { getUser } from "../../utils/apis";
 
 const Main = () => {
   const divRef = useRef<HTMLDivElement>(null);
   const { number } = useRecoilValue(userState);
   const width = useResize();
   const style = { flex: `0 0 ${width}px` };
-  const { page, moveFirstPage, moveSecondPage } = useMovePage(divRef, width);
   const { socket } = useSocket();
+  const setUser = useSetRecoilState(userState);
+  const {
+    page,
+    moveFirstPage,
+    moveSecondPage,
+    onClickMoveFirstPage,
+    onClickMoveSecondPage,
+  } = useMovePage(divRef, width);
+
+  const setUserInfo = async () => {
+    const token = localStorage.getItem("accessToken");
+
+    if (token === null) return;
+
+    const { data } = await getUser(token);
+
+    setUser(data);
+  };
 
   useEffect(() => {
     if (number === 0 || socket.current === undefined) return;
@@ -52,6 +70,10 @@ const Main = () => {
     };
   }, []);
 
+  useEffect(() => {
+    setUserInfo();
+  }, []);
+
   return (
     <MainWrap id="scroll-area" height={window.screen.availHeight}>
       <div ref={divRef} style={{ width }}>
@@ -60,8 +82,8 @@ const Main = () => {
       </div>
       <Navigator
         page={page}
-        moveFirstPage={moveFirstPage}
-        moveSecondPage={moveSecondPage}
+        onClickMoveFirstPage={onClickMoveFirstPage}
+        onClickMoveSecondPage={onClickMoveSecondPage}
       />
     </MainWrap>
   );
@@ -72,7 +94,7 @@ const MainWrap = styled.main<{ height: number }>`
   > div {
     display: flex;
     align-items: center;
-    min-height: 100vh;
+    min-height: 85vh;
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
     > div {

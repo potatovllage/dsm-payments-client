@@ -31,7 +31,9 @@ const FirstView = ({ style }: Props) => {
     imgRef.current.setAttribute("src", canvas.toDataURL("image/png"));
   };
 
-  useEffect(canvasToImg, [imgRef.current]);
+  useEffect(() => {
+    canvasToImg();
+  }, [imgRef.current, uuid]);
 
   return (
     <FirstViewWrap id="first-view" style={style}>

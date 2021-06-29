@@ -4,13 +4,15 @@ import { keyframes, css } from "@emotion/react";
 
 import { badgeGhostHouse } from "../../assets";
 import useToggle from "../../utils/hooks/public/useToggle";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../utils/recoils";
 
 type Props = { style: { flex: string } };
 
 const flipCoin = (fromY: number, toY: number) =>
   css(keyframes`
   from {
-      transform: translate(-50%, -50%) rotateY(${fromY}deg);
+      transform: translate(-50%, -75%) rotateY(${fromY}deg);
   }
   30% {
     top: 35%;
@@ -19,7 +21,7 @@ const flipCoin = (fromY: number, toY: number) =>
     top: 35%;
   }
   to {
-    transform: translate(-50%, -50%) rotateY(${toY}deg);
+    transform: translate(-50%, -75%) rotateY(${toY}deg);
   }
 `);
 
@@ -31,7 +33,7 @@ const flipOption = `${flipMillSec}ms cubic-bezier(0.2, 1, 0.15, 1.05) forwards`;
 const SecondView = ({ style }: Props) => {
   const isAble = useRef<boolean>(true);
   const { toggle, onToggle } = useToggle();
-  const [boothCount, setBoothCount] = useState<number>(0);
+  const { countOfUsedBooth } = useRecoilValue(userState);
 
   const onClickFlipCoin = () => {
     if (isAble.current === false) return;
@@ -45,25 +47,25 @@ const SecondView = ({ style }: Props) => {
   };
 
   const printBoothDescription = useMemo(() => {
-    if (boothCount >= 10) {
-      return <p>맙소사 부스를 {boothCount}회 이용했어요!</p>;
+    if (countOfUsedBooth >= 10) {
+      return <p>맙소사 부스를 {countOfUsedBooth}회 이용했어요!</p>;
     }
-    if (boothCount >= 8) {
-      return <p>무려 부스를 {boothCount}회 이용했어요!</p>;
+    if (countOfUsedBooth >= 8) {
+      return <p>무려 부스를 {countOfUsedBooth}회 이용했어요!</p>;
     }
-    if (boothCount >= 5) {
-      return <p>벌써 부스를 {boothCount}회나 이용했어요!</p>;
+    if (countOfUsedBooth >= 5) {
+      return <p>벌써 부스를 {countOfUsedBooth}회나 이용했어요!</p>;
     }
-    if (boothCount >= 1) {
-      return <p>부스를 {boothCount}회 이용했어요!</p>;
+    if (countOfUsedBooth >= 1) {
+      return <p>부스를 {countOfUsedBooth}회 이용했어요!</p>;
     }
-    if (boothCount === 0) {
+    if (countOfUsedBooth === 0) {
       return <p>아직 부스를 이용하지 않았어요.</p>;
     }
-  }, [boothCount]);
+  }, [countOfUsedBooth]);
 
   const printBadge = useMemo(() => {
-    if (boothCount >= 10) {
+    if (countOfUsedBooth >= 10) {
       return (
         <>
           <img
@@ -81,7 +83,7 @@ const SecondView = ({ style }: Props) => {
         </>
       );
     }
-    if (boothCount >= 8) {
+    if (countOfUsedBooth >= 8) {
       return (
         <>
           <img
@@ -99,7 +101,7 @@ const SecondView = ({ style }: Props) => {
         </>
       );
     }
-    if (boothCount >= 5) {
+    if (countOfUsedBooth >= 5) {
       return (
         <>
           <img
@@ -117,7 +119,7 @@ const SecondView = ({ style }: Props) => {
         </>
       );
     }
-    if (boothCount >= 0) {
+    if (countOfUsedBooth >= 0) {
       return (
         <>
           <img
@@ -135,7 +137,7 @@ const SecondView = ({ style }: Props) => {
         </>
       );
     }
-  }, [boothCount]);
+  }, [countOfUsedBooth]);
 
   return (
     <SecondViewWrap id="second-view" style={style} toggle={toggle}>
@@ -158,18 +160,19 @@ const SecondViewWrap = styled.div<{ toggle: boolean }>`
   line-height: 1.5;
   > .badge {
     position: relative;
+    transform: translateY(-25%);
     width: 50%;
     height: 300px;
     text-align: center;
     transform-style: preserve-3d;
-    animation: jump 5000ms linear infinite;
+    /* animation: jump 5000ms linear infinite; */
     > img {
       position: absolute;
       top: 80%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: 200px;
-      height: 200px;
+      transform: translate(-50%, -75%);
+      width: 160px;
+      height: 160px;
       min-width: 150px;
       min-height: 150px;
       max-width: 300px;
@@ -180,7 +183,7 @@ const SecondViewWrap = styled.div<{ toggle: boolean }>`
       backface-visibility: hidden;
       cursor: pointer;
       &.front {
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -75%);
         animation: ${({ toggle }) =>
           toggle
             ? css`
@@ -190,7 +193,7 @@ const SecondViewWrap = styled.div<{ toggle: boolean }>`
         z-index: 10;
       }
       &.back {
-        transform: translate(-50%, -50%) rotateY(-180deg);
+        transform: translate(-50%, -75%) rotateY(-180deg);
         animation: ${({ toggle }) =>
           toggle
             ? css`
