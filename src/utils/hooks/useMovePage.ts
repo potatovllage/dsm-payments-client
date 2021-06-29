@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useState } from "react";
+import { RefObject, useState } from "react";
 
 const useMovePage = (divRef: RefObject<HTMLDivElement>, width: number) => {
   const [page, setPage] = useState<number>(1);
@@ -11,19 +11,25 @@ const useMovePage = (divRef: RefObject<HTMLDivElement>, width: number) => {
     setPage(2);
   };
 
-  useEffect(() => {
+  const onClickMoveFirstPage = () => {
     if (!divRef.current) return;
 
-    if (page === 1) {
-      divRef.current.scrollTo({ left: -width, behavior: "smooth" });
-    } else if (page === 2) {
-      divRef.current.scrollTo({ left: width, behavior: "smooth" });
-    } else {
-      throw Error("page is not matched");
-    }
-  }, [page]);
+    divRef.current.scrollTo({ left: -width, behavior: "smooth" });
+  };
 
-  return { page, moveFirstPage, moveSecondPage } as const;
+  const onClickMoveSecondPage = () => {
+    if (!divRef.current) return;
+
+    divRef.current.scrollTo({ left: width, behavior: "smooth" });
+  };
+
+  return {
+    page,
+    moveFirstPage,
+    moveSecondPage,
+    onClickMoveFirstPage,
+    onClickMoveSecondPage,
+  } as const;
 };
 
 export default useMovePage;

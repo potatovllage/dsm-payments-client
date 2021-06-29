@@ -2,10 +2,9 @@ import { useEffect, useRef } from "react";
 import { useSetRecoilState } from "recoil";
 import socketIO from "socket.io-client";
 
+import { SOCKET_URL } from "../apis";
 import { PaySuccessFulType } from "../libs/types";
 import { userState } from "../recoils";
-
-const SOCKET_URL = "https://cf61e6e3d67e.ngrok.io";
 
 const useSocket = () => {
   const socket = useRef<SocketIOClient.Socket>();
