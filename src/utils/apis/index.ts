@@ -2,7 +2,8 @@ import axios from "axios";
 
 import { LoginReq, LoginRes, UserRes } from "../libs/types";
 
-const BASE_URL = "https://6a170f85d823.ngrok.io";
+const BASE_URL = "https://5192089a03c0.ngrok.io";
+export const SOCKET_URL = "https://1a386f832ae6.ngrok.io";
 
 const request = axios.create({
   baseURL: BASE_URL,
