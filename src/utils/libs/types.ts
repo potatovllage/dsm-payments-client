@@ -17,6 +17,7 @@ export type UserRes = {
   name: string;
   uuid: string;
   coin: number;
+  countOfUsedBooth: number;
 };
 
 export type PaySuccessFulType = {
