@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "@emotion/styled";
 
@@ -6,10 +6,18 @@ import FirstView from "./FirstView";
 import SecondView from "./SecondView";
 import Navigator from "./Navigator";
 import withNeedAuth from "./withNeedAuth";
+import PaySuccessFulModal from "./PaySuccessFulModal";
 
-import { useResize, useMovePage, useSocket } from "../../utils/hooks";
+import {
+  useResize,
+  useMovePage,
+  useSocket,
+  useLoading,
+} from "../../utils/hooks";
 import { userState } from "../../utils/recoils";
 import { getUser } from "../../utils/apis";
+import Loading from "../Loading";
+import { PaySuccessFulType } from "../../utils/libs/types";
 
 const Main = () => {
   const divRef = useRef<HTMLDivElement>(null);
@@ -25,15 +33,27 @@ const Main = () => {
     onClickMoveFirstPage,
     onClickMoveSecondPage,
   } = useMovePage(divRef, width);
+  const { loading, startLoading, endLoading } = useLoading(false);
+  const [payRes, setPayRes] = useState<PaySuccessFulType | null>(null);
 
   const setUserInfo = async () => {
     const token = localStorage.getItem("accessToken");
 
     if (token === null) return;
 
-    const { data } = await getUser(token);
+    startLoading();
+    try {
+      const { data } = await getUser(token);
 
-    setUser(data);
+      setUser(data);
+    } catch (err) {
+      alert("유저 정보 가져오기 실패");
+    }
+    endLoading();
+  };
+
+  const closeModal = () => {
+    setPayRes(null);
   };
 
   useEffect(() => {
@@ -41,6 +61,15 @@ const Main = () => {
 
     socket.current.emit("receipt-join", { number });
   }, [number, socket]);
+
+  useEffect(() => {
+    if (!socket.current) return;
+
+    socket.current.on("pay-successful", (msg: PaySuccessFulType) => {
+      setPayRes(msg);
+      setUserInfo();
+    });
+  }, []);
 
   useEffect(() => {
     const callback: IntersectionObserverCallback = (entries) => {
@@ -66,9 +95,11 @@ const Main = () => {
     observer.observe(secondTarget);
 
     return () => {
+      observer.unobserve(firstTarget);
+      observer.unobserve(secondTarget);
       observer.disconnect();
     };
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
     setUserInfo();
@@ -76,27 +107,41 @@ const Main = () => {
 
   return (
     <MainWrap id="scroll-area" height={window.screen.availHeight}>
-      <div ref={divRef} style={{ width }}>
-        <FirstView style={style} />
-        <SecondView style={style} />
+      <div
+        id="view-wrap"
+        ref={divRef}
+        style={{ width, justifyContent: loading ? "center" : "flex-start" }}
+      >
+        {loading ? (
+          <Loading width="100px" height="100px" />
+        ) : (
+          <>
+            <SecondView style={style} />
+            <FirstView style={style} />
+          </>
+        )}
       </div>
       <Navigator
         page={page}
         onClickMoveFirstPage={onClickMoveFirstPage}
         onClickMoveSecondPage={onClickMoveSecondPage}
       />
+      {payRes && <PaySuccessFulModal {...payRes} closeModal={closeModal} />}
     </MainWrap>
   );
 };
 
 const MainWrap = styled.main<{ height: number }>`
   width: 100%;
-  > div {
+  > #view-wrap {
     display: flex;
     align-items: center;
     min-height: 85vh;
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
+    ::-webkit-scrollbar {
+      display: none;
+    }
     > div {
       text-align: center;
       font-size: 24px;

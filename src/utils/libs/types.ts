@@ -21,10 +21,12 @@ export type UserRes = {
 };
 
 export type PaySuccessFulType = {
-  finalValue: number;
   id: number;
+  createdAt: number;
   requestValue: number;
-  sender: string;
   tax: number;
-  user: UserRes;
+  finalValue: number;
+  sender: string;
+  user: { uuid: string; number: number; name: string; coin: number };
+  booth: { coin: number; id: string; name: string; totalCoin: number };
 };

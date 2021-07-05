@@ -7,7 +7,7 @@ export const userState = atom<UserRes>({
   default: {
     uuid: "",
     name: "",
-    number: 2115,
+    number: 0,
     coin: 0,
     countOfUsedBooth: 0,
   },

@@ -2,8 +2,8 @@ import axios from "axios";
 
 import { LoginReq, LoginRes, UserRes } from "../libs/types";
 
-const BASE_URL = "https://5192089a03c0.ngrok.io";
-export const SOCKET_URL = "https://1a386f832ae6.ngrok.io";
+const BASE_URL = "https://api.dsm-pay.com";
+export const SOCKET_URL = "https://socket.dsm-pay.com";
 
 const request = axios.create({
   baseURL: BASE_URL,
@@ -16,7 +16,7 @@ export const postStudentLogin = (req: LoginReq) => {
 };
 
 export const postTeacherLogin = (req: LoginReq) => {
-  return request.post<LoginRes>("/user/auth", {
+  return request.post<LoginRes>("/user/auth/teacher", {
     ...req,
   });
 };

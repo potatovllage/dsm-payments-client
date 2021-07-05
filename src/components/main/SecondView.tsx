@@ -9,6 +9,21 @@ import { userState } from "../../utils/recoils";
 
 type Props = { style: { flex: string } };
 
+const ghostHouseTimes = [
+  "09:40 ~ 10:00",
+  "10:40 ~ 11:00",
+  "11:40 ~ 12:00",
+  "13:40 ~ 14:00",
+  "14:40 ~ 15:00",
+  "15:40 ~ 16:00",
+];
+
+const ghostHouseAvailableTime = ghostHouseTimes.find((time) => {
+  const t = +time.split(":")[0];
+  const h = new Date().getHours();
+  return t >= h;
+});
+
 const flipCoin = (fromY: number, toY: number) =>
   css(keyframes`
   from {
@@ -149,6 +164,19 @@ const SecondView = ({ style }: Props) => {
       <div className="badge" onClick={onClickFlipCoin}>
         {printBadge}
       </div>
+      <p className="notice">
+        {ghostHouseAvailableTime ? (
+          <>
+            귀신의 집 뱃지 가지신 분은
+            <br />
+            <span className="time">{ghostHouseAvailableTime}</span>
+            <br />
+            참여 신청이 가능합니다!!
+          </>
+        ) : (
+          "귀신의 집 운영기간이 끝났습니다."
+        )}
+      </p>
     </SecondViewWrap>
   );
 };
@@ -165,7 +193,7 @@ const SecondViewWrap = styled.div<{ toggle: boolean }>`
     height: 300px;
     text-align: center;
     transform-style: preserve-3d;
-    /* animation: jump 5000ms linear infinite; */
+    animation: jump 5000ms linear infinite;
     > img {
       position: absolute;
       top: 80%;
@@ -223,21 +251,27 @@ const SecondViewWrap = styled.div<{ toggle: boolean }>`
       margin: 0 4px;
     }
   }
+  > .notice {
+    font-size: 16px;
+    > .time {
+      color: #4384f3;
+    }
+  }
   @keyframes jump {
     43% {
-      transform: translateY(0);
+      transform: translateY(-25%);
     }
     46% {
-      transform: translateY(-10px);
+      transform: translateY(calc(-25% + -10px));
     }
     50% {
-      transform: translateY(0);
+      transform: translateY(-25%);
     }
     53% {
-      transform: translateY(-10px);
+      transform: translateY(calc(-25% + -10px));
     }
     56% {
-      transform: translateY(0);
+      transform: translateY(-25%);
     }
   }
 `;
