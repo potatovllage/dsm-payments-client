@@ -170,7 +170,10 @@ const SecondView = ({ style }: Props) => {
             귀신의 집 뱃지 가지신 분은
             <br />
             <span className="time">{ghostHouseAvailableTime}</span>시에{" "}
-            <a href="https://forms.gle/LX8W8baJe9a5pjnW9">이 링크</a>에서
+            <a href="https://forms.gle/LX8W8baJe9a5pjnW9" target="_blank">
+              이 링크
+            </a>
+            에서
             <br />
             참여 신청이 가능합니다!!
           </>
