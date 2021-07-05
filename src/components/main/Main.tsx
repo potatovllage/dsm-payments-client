@@ -147,7 +147,7 @@ const MainWrap = styled.main<{ height: number }>`
       font-size: 24px;
       scroll-snap-align: start;
       > * {
-        margin: 18px auto;
+        margin: 12px auto;
         max-width: 500px;
       }
     }

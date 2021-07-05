@@ -189,9 +189,9 @@ const SecondViewWrap = styled.div<{ toggle: boolean }>`
   line-height: 1.5;
   > .badge {
     position: relative;
-    transform: translateY(-25%);
+    transform: translateY(0);
     width: 50%;
-    height: 300px;
+    height: 250px;
     text-align: center;
     transform-style: preserve-3d;
     animation: jump 5000ms linear infinite;
@@ -263,19 +263,19 @@ const SecondViewWrap = styled.div<{ toggle: boolean }>`
   }
   @keyframes jump {
     43% {
-      transform: translateY(-25%);
+      transform: translateY(0);
     }
     46% {
-      transform: translateY(calc(-25% + -10px));
+      transform: translateY(calc(0 + -10px));
     }
     50% {
-      transform: translateY(-25%);
+      transform: translateY(0);
     }
     53% {
-      transform: translateY(calc(-25% + -10px));
+      transform: translateY(calc(0 + -10px));
     }
     56% {
-      transform: translateY(-25%);
+      transform: translateY(0);
     }
   }
 `;
