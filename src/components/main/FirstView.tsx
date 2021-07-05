@@ -1,4 +1,3 @@
-import { useRef, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import QRCodeCreator from "qrcode.react";
 import styled from "@emotion/styled";
@@ -9,31 +8,7 @@ import { userState } from "../../utils/recoils";
 type Props = { style: { flex: string } };
 
 const FirstView = ({ style }: Props) => {
-  const imgRef = useRef<HTMLImageElement>(null);
   const { uuid, coin } = useRecoilValue(userState);
-
-  const downloadQRCode = () => {
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-
-    if (canvas === null) return;
-
-    const a = document.createElement("a");
-    a.download = "dsm-festival-qrcode.png";
-    a.href = canvas.toDataURL();
-    a.click();
-  };
-
-  const canvasToImg = () => {
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-
-    if (!canvas || !imgRef.current) return;
-
-    imgRef.current.setAttribute("src", canvas.toDataURL("image/png"));
-  };
-
-  useEffect(() => {
-    canvasToImg();
-  }, [uuid]);
 
   return (
     <FirstViewWrap id="first-view" style={style}>
@@ -42,16 +17,9 @@ const FirstView = ({ style }: Props) => {
         이용하려는 부스에 QR코드로 결제하거나 QR코드 대신 고유번호로 결제하세요.
       </p>
       <QRCodeCreator
-        id="canvas"
-        value={uuid}
-        style={{ display: "none", width: "25%", height: "25%" }}
-      />
-      <img
-        ref={imgRef}
         id="qrcode"
-        alt="qrcode"
-        title="arcode"
-        onClick={downloadQRCode}
+        value={uuid}
+        style={{ width: "35%", height: "35%" }}
       />
       <p className="uuid">
         <span>고유번호</span>
