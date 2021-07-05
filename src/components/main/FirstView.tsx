@@ -118,7 +118,7 @@ const FirstViewWrap = styled.div`
     min-height: 180px;
     width: 35%;
     height: 35%;
-    max-width: 350px;
+    max-width: 350px !important;
     max-height: 350px;
   }
 `;

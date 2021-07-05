@@ -116,8 +116,8 @@ const Main = () => {
           <Loading width="100px" height="100px" />
         ) : (
           <>
-            <SecondView style={style} />
             <FirstView style={style} />
+            <SecondView style={style} />
           </>
         )}
       </div>
