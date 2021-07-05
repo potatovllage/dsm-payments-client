@@ -33,7 +33,7 @@ const FirstView = ({ style }: Props) => {
 
   useEffect(() => {
     canvasToImg();
-  }, [imgRef.current, uuid]);
+  }, [uuid]);
 
   return (
     <FirstViewWrap id="first-view" style={style}>

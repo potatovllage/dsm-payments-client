@@ -63,22 +63,6 @@ const LoginCommon: FC<Props> = ({
   const login = async () => {
     startLoading();
 
-    // setTimeout(() => {
-    //   setUser({
-    //     uuid: "1234567",
-    //     name: "테스트",
-    //     number: 1111,
-    //     coin: 1000000000,
-    //     countOfUsedBooth: 5,
-    //   });
-    //   localStorage.setItem(
-    //     "accessToken",
-    //     "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjQ1MTgyMDUsImV4cCI6MTYyNDYwNDYwNSwic3ViIjoiYXNkZiIsInR5cGUiOiJib290aCJ9.cEExgm3Wr_v0OvU4nvZlAR8qMTKBbEqFMGodCG75j-0"
-    //   );
-
-    //   history.push("/");
-    // }, 2000);
-
     try {
       const {
         data: { accessToken },
@@ -100,13 +84,13 @@ const LoginCommon: FC<Props> = ({
 
   const onClickLogin = useCallback(() => {
     if (checkValidation()) login();
-  }, [id, password, idRef.current, passwordRef.current]);
+  }, [id, password]);
 
   const onKeyPressLogin = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter" && checkValidation()) login();
     },
-    [id, password, idRef.current, passwordRef.current]
+    [id, password]
   );
 
   const getUserInfo = async (accessToken: string) => {
