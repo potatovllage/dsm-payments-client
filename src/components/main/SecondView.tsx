@@ -1,10 +1,10 @@
 import { useRef, useMemo } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "@emotion/styled";
 import { keyframes, css } from "@emotion/react";
 
 import { badgeGhostHouse } from "../../assets";
 import useToggle from "../../utils/hooks/public/useToggle";
-import { useRecoilValue } from "recoil";
 import { userState } from "../../utils/recoils";
 
 type Props = { style: { flex: string } };
@@ -18,11 +18,9 @@ const ghostHouseTimes = [
   "15:40 ~ 16:00",
 ];
 
-const ghostHouseAvailableTime = ghostHouseTimes.find((time) => {
-  const t = +time.split(":")[0];
-  const h = new Date().getHours();
-  return t >= h;
-});
+const ghostHouseAvailableTime = ghostHouseTimes.find(
+  (time) => +time.split(":")[0] >= new Date().getHours()
+);
 
 const flipCoin = (fromY: number, toY: number) =>
   css(keyframes`

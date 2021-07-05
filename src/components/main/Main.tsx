@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "@emotion/styled";
 
@@ -20,6 +21,7 @@ import Loading from "../Loading";
 import { PaySuccessFulType } from "../../utils/libs/types";
 
 const Main = () => {
+  const history = useHistory();
   const divRef = useRef<HTMLDivElement>(null);
   const { number } = useRecoilValue(userState);
   const width = useResize();
@@ -48,6 +50,7 @@ const Main = () => {
       setUser(data);
     } catch (err) {
       alert("유저 정보 가져오기 실패");
+      history.push("/login");
     }
     endLoading();
   };
