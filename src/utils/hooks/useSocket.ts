@@ -14,14 +14,6 @@ const useSocket = () => {
       forceNew: true,
     });
 
-    socket.current.on("reconnect", () => {
-      if (!socket.current) return;
-
-      socket.current.emit("auth", {
-        accessToken: localStorage.getItem("accessToken"),
-      });
-    });
-
     socket.current.on("connect_error", () => {
       socketConnectCount > 3
         ? socket.current?.disconnect()
