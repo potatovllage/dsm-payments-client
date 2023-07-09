@@ -25,11 +25,6 @@ const Navigator = ({
       ) : (
         <IoQrCodeOutline onClick={onClickMoveFirstPage} />
       )}
-      {page === 2 ? (
-        <RiCoupon2Fill className="active" onClick={onClickMoveSecondPage} />
-      ) : (
-        <RiCoupon2Line onClick={onClickMoveSecondPage} />
-      )}
     </NavigatorWrap>
   );
 };
