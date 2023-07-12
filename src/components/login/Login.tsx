@@ -16,11 +16,7 @@ const Login = () => {
       onChangeId={onChangeId}
       onChangePassword={onChangePassword}
       postLogin={postStudentLogin}
-    >
-      <p>
-        <Link to="/teacher/login">선생님이신가요?</Link>
-      </p>
-    </LoginCommon>
+    ></LoginCommon>
   );
 };
 
